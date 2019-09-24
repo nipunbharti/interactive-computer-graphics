@@ -1,0 +1,46 @@
+import pygame, math
+from pygame import gfxdraw
+
+black = (0, 0, 0)
+white = (255, 255, 255)
+
+def levy_C_Curve(startX, startY, length, alpha, num_iter):
+	if num_iter > 0 :
+		length = float(length/math.sqrt(2))
+		levy_C_Curve(startX, startY, length, alpha + 45, num_iter - 1)
+		levy_C_Curve((startX + length * math.cos(math.radians (45 + alpha))),
+						 (startY + length * math.sin(math.radians (45 + alpha))),
+						 length, alpha - 45, num_iter - 1)
+	else :
+		endX = int(startX + (length * math.cos(math.radians(alpha))))
+		endY = int(startY + (length * math.sin(math.radians(alpha))))
+		# print("Start", startX, startY)
+		# print("End", endX, endY)
+		pygame.draw.line(screen, white, [startX, startY], [endX, endY], 1)
+		pygame.display.update()
+
+def main(startX, startY, num_iter, length):
+
+	levy_C_Curve(startX, startY, int(length), 0, int(num_iter))
+
+	while True:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+
+		pygame.display.update()
+
+
+if __name__ == "__main__":
+	first_point = input("Enter the first point: ")
+	first_point = [int(x) for x in first_point.split(',')]
+
+	num_iter = input("Enter the number of iterations: ")
+	length = input("Enter the length: ")
+
+	pygame.init()
+	size = [700, 700]
+	screen = pygame.display.set_mode(size)
+
+	main(first_point[0], first_point[1], num_iter, length)
+	pygame.quit()

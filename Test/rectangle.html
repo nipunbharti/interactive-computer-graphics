@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<title>
+			Rectangle
+		</title>
+		<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+	  	<script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.js"></script>
+	  	<script>
+	  		var x = 0;
+	  		var y = 0;
+	  		var speedY = 1.1;
+	  		var speedX = 1;
+	  		function setup() {
+	  			createCanvas(600, 600);
+	  		}
+
+	  		function draw() {
+	  			background(0);
+	  			stroke(255);
+	  			noFill();
+
+	  			rect(x, y, 100, 50);
+
+	  			y += speedY;
+	  			x += speedX;
+	  			if(x >= 500 || y >= 550) {
+	  				speedX = 0;
+	  				speedY = 0;
+	  			}
+	  		}
+	  	</script>
+	</head>
+	<body>
+	</body>
+</html>

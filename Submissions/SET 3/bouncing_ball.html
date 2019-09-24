@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<title>
+			Bouncing Ball
+		</title>
+		<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+	  	<script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.js"></script>
+	  	<script>
+	  		var y = 100;
+	  		var diameter = 100;
+	  		var speed = 5;
+	  		var inc = 0.5;
+	  		function setup() {
+	  			createCanvas(600, 600);
+	  		}
+
+	  		function draw() {
+	  			background(0);
+	  			stroke(255);
+	  			noFill();
+
+	  			circle(300, y, diameter);
+
+	  			y += speed;
+	  			diameter += inc;
+	  			if(y + diameter > 700) {
+	  				speed = -5;
+	  			}
+	  			else if(y + diameter < 400) {
+	  				speed = 5;
+	  			}
+	  			if(diameter == 350) {
+	  				speed = 0;
+	  				inc = 0;
+	  			}
+	  		}
+	  	</script>
+	</head>
+	<body>
+	</body>
+</html>

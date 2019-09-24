@@ -1,0 +1,82 @@
+import pygame
+from pygame import gfxdraw
+
+black = (0, 0, 0)
+white = (255, 255, 255)
+
+def plot_line_low(x0, y0, x1, y1, dx, dy):
+	y = y0
+	DV = dx - 2*dy
+
+	for x in range(x0, x1+1):
+		print(x, y)
+		gfxdraw.pixel(screen, int(round(x)), int(round(y)), white)
+
+		if DV >= 0:
+			DV -= 2*dy
+		else:
+			y += 1
+			DV -= 2*(dy - dx)
+
+def plot_line_high(x0, y0, x1, y1, dx, dy):
+	x = x0
+	DV = dx - 2*dy
+
+	for y in range(y0, y1+1):
+		gfxdraw.pixel(screen, int(round(x)), int(round(y)), white)
+
+		if DV >= 0:
+			DV -= 2*dy
+		else:
+			x += 1
+			DV -= 2*(dy - dx)
+
+def plot_same_slope(x0, y0, x1, y1):
+	y = y0
+	x = x0
+	for x in range(x0, x1):
+		gfxdraw.pixel(screen, int(round(x)), int(round(y)), white)
+		y -= 1
+
+def main(first_point, second_point):
+	screen.fill(black)
+	dx = second_point[0] - first_point[0]
+	dy = second_point[1] - first_point[1]
+
+	if abs(dy) == abs(dx):
+		if first_point[0] < second_point[1]:
+			plot_same_slope(first_point[0], first_point[1], second_point[0], second_point[1])
+		else:
+			plot_same_slope(second_point[0], second_point[1], first_point[0], first_point[1])
+	elif abs(dy) < abs(dx):
+		if first_point[0] < second_point[0]:
+			plot_line_low(first_point[0], first_point[1], second_point[0], second_point[1], dx, dy)
+		else:
+			plot_line_low(second_point[0], second_point[1], first_point[0], first_point[1], (-1)*dx, (-1)*dy)
+	else:
+		if first_point[1] < second_point[1]:
+			plot_line_high(first_point[0], first_point[1], second_point[0], second_point[1], dx, dy)
+		else:
+			plot_line_low(second_point[0], second_point[1], first_point[0], first_point[1], (-1)*dx, (-1)*dy)
+
+	while True:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+
+		pygame.display.update()
+
+
+if __name__ == "__main__":
+	first_point = input("Enter the first point: ")
+	second_point = input("Enter the second point: ")
+
+	first_point = [int(x) for x in first_point.split(',')]
+	second_point = [int(x) for x in second_point.split(',')]
+
+	pygame.init()
+	size = [700, 500]
+	screen = pygame.display.set_mode(size)
+
+	main(first_point, second_point)
+	pygame.quit()
