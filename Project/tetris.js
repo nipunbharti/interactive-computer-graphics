@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 const ROW = 20;
 const COLUMN = 10;
 const VACANT = "white";
-const SQ = 20;
+const SQ = 30;
 let board = [];
 
 function drawSquare(x, y, colour) {
