@@ -30,3 +30,35 @@ function drawBoard() {
 }
 
 drawBoard();
+
+const pieces = [
+	[Z, "green"],
+	[S, "red"],
+	[J, "blue"],
+	[T, "yellow"],
+	[I, "orange"],
+	[O, "pink"]
+];
+
+function drawTetronimo(piece, colour) {
+	console.log(piece, colour);
+	for(let i = 0; i < piece.length; i++) {
+		for(let j = 0; j < piece[0].length; j++) {
+			if(piece[i][j]) {
+				console.log(j, i);
+				drawSquare(j, i, colour)
+			}
+		}
+	}
+}
+
+drawTetronimo(pieces[0][0][3], pieces[0][1])
+
+function Piece(tetronimo, colour) {
+	this.tetronimo = tetronimo;
+	this.startPattern = 0;
+	this.activePattern = this.tetronimo[this.startPattern];
+	this.colour = colour;
+	this.x = 3;
+	this.y = -2;
+}
