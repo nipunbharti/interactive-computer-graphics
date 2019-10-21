@@ -41,11 +41,9 @@ const pieces = [
 ];
 
 function drawTetronimo(piece, colour) {
-	console.log(piece, colour);
 	for(let i = 0; i < piece.length; i++) {
 		for(let j = 0; j < piece[0].length; j++) {
 			if(piece[i][j]) {
-				console.log(j, i);
 				drawSquare(j, i, colour)
 			}
 		}
