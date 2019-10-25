@@ -60,3 +60,21 @@ function Piece(tetronimo, colour) {
 	this.x = 3;
 	this.y = -2;
 }
+
+Piece.prototype.fill = function(colour) {
+	for(let i = 0; i < this.activePattern.length; i++) {
+		for(let j = 0; j < this.activePattern.length; j++) {
+			if(this.activePattern[i][j]) {
+				drawSquare(this.x + j, this.y + i, colour);
+			}
+		}	
+	}
+}
+
+Piece.prototype.draw = function() {
+	this.fill(this.colour);
+}
+
+Piece.prototype.unDraw = function() {
+	this.fill(VACANT);
+}
