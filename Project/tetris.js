@@ -78,3 +78,92 @@ Piece.prototype.draw = function() {
 Piece.prototype.unDraw = function() {
 	this.fill(VACANT);
 }
+
+Piece.prototype.moveDown = function() {
+	if(this.detectCollision(0, 1, this.activePattern)) {
+		this.unDraw();
+		this.y++;
+		this.draw();
+	}
+	else {
+
+	}
+}
+
+Piece.prototype.moveLeft = function() {
+	if(this.detectCollision(-1, 0, this.activePattern)) {
+		this.unDraw();
+		this.x--;
+		this.draw();
+	}
+	else {
+
+	}
+}
+
+Piece.prototype.moveRight = function() {
+	if(this.detectCollision(1, 0, this.activePattern)) {
+		this.unDraw();
+		this.x++;
+		this.draw();
+	}
+	else {
+
+	}
+}
+
+Piece.prototype.rotate = function() {
+	this.unDraw();
+	this.startPattern = (this.startPattern + 1)%this.tetronimo.length;
+	this.activePattern = this.tetronimo[this.startPattern];
+	this.draw();
+}
+
+Piece.prototype.detectCollision = function(x, y, piece) {
+	for(let i = 0; i < piece.length; i++) {
+		for(let j = 0; j < piece.length; j++) {
+			if(!peice[i][j]) {
+				continue;
+			}
+
+			let newX = this.x + j + x;
+			let newY = this.y + i + y;
+
+			if(newX < 0 || newX > ROW || newY > COLUMN) {
+				return true;
+			}
+
+			if(newY < 0) {
+				continue;
+			}
+
+			if(board[newX][newY] != VACANT) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+document.addEventListener('keydown', handleKeyDown);
+
+function handleKeyDown(event) {
+	switch(event.keyCode) {
+		case 37:
+			piece.moveLeft();
+			break;
+		case 38:
+			peice.rotate();
+			break;
+		case 39:
+			piece.moveRight();
+			break;
+		case 40:
+			peice.moveDown();
+			break;
+		default:
+			alert('Wrong key');
+	}
+}
+
