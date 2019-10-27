@@ -6,6 +6,7 @@ const COLUMN = 10;
 const VACANT = "white";
 const SQ = 30;
 let board = [];
+let score = 0;
 
 function drawSquare(x, y, colour) {
 	ctx.fillStyle = colour;
@@ -67,6 +68,8 @@ function Piece(tetronimo, colour) {
 	this.x = 3;
 	this.y = -2;
 }
+
+const scoreElement = document.getElementById('score');
 
 Piece.prototype.fill = function(colour) {
 	for(let i = 0; i < this.activePattern.length; i++) {
@@ -191,10 +194,13 @@ Piece.prototype.lockPiece = function() {
 			for(let j = 0; j < COLUMN; j++) {
 				board[0][j] = VACANT;
 			}
+
+			score += 10;
 		}
 	}
 
 	drawBoard();
+	scoreElement.innerHTML = score;
 }
 
 document.addEventListener('keydown', handleKeyDown);
