@@ -113,10 +113,20 @@ Piece.prototype.moveRight = function() {
 }
 
 Piece.prototype.rotate = function() {
-	this.unDraw();
-	this.startPattern = (this.startPattern + 1)%this.tetronimo.length;
-	this.activePattern = this.tetronimo[this.startPattern];
-	this.draw();
+	let nextPattern = this.tetronimo[(this.startPattern + 1)%this.tetronimo.length];
+	let wallKick = 0;
+
+	if(this.detectCollision(0, 0, nextPattern)) {
+		this.x > COLUMN/2 ? wallKick = -1 : wallKick = 1;
+	}
+
+	if(!this.detectCollision(wallKick, 0, nextPattern)) {
+		this.unDraw();
+		this.x += wallKick;
+		this.startPattern = (this.startPattern + 1)%this.tetronimo.length;
+		this.activePattern = this.tetronimo[this.startPattern];
+		this.draw();
+	}
 }
 
 Piece.prototype.detectCollision = function(x, y, piece) {
