@@ -223,7 +223,7 @@ function handleKeyDown(event) {
 let dropStartTime = Date.now();
 let gameOver = false;
 function dropPiece() {
-	console.log(newP);
+	// console.log(newP);
 	let now = Date.now();
 	let delta = now - dropStartTime;
 	if(delta > 1000) {
@@ -235,4 +235,4 @@ function dropPiece() {
 	}
 }
 
-// dropPiece();
+dropPiece();
