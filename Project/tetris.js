@@ -22,6 +22,7 @@ for(let i = 0; i < ROW; i++) {
 	}
 }
 
+// Draw board by drawing squares
 function drawBoard() {
 	for(let i = 0; i < ROW; i++) {
 		for(let j = 0; j < COLUMN; j++) {
@@ -41,6 +42,7 @@ const pieces = [
 	[O, "coral"]
 ];
 
+// Draw the tettronimo
 function drawTetronimo(piece, colour) {
 	for(let i = 0; i < piece.length; i++) {
 		for(let j = 0; j < piece[0].length; j++) {
@@ -51,15 +53,16 @@ function drawTetronimo(piece, colour) {
 	}
 }
 
+// Generate a random piece
 function generateRandomPiece() {
 	let randomNumber = Math.floor(Math.random()*pieces.length);
 	return new Piece(pieces[randomNumber][0], pieces[randomNumber][1]);
 }
 
+// Create a new piece
 let newP = generateRandomPiece();
 
-// drawTetronimo(pieces[0][0][3], pieces[0][1]);
-
+// Piece constructor
 function Piece(tetronimo, colour) {
 	this.tetronimo = tetronimo;
 	this.startPattern = 0;
@@ -71,6 +74,8 @@ function Piece(tetronimo, colour) {
 
 const scoreElement = document.getElementById('score');
 
+
+// Draw the piece
 Piece.prototype.fill = function(colour) {
 	for(let i = 0; i < this.activePattern.length; i++) {
 		for(let j = 0; j < this.activePattern.length; j++) {
@@ -81,14 +86,18 @@ Piece.prototype.fill = function(colour) {
 	}
 }
 
+// Draw square with the colour of tetronimo
 Piece.prototype.draw = function() {
 	this.fill(this.colour);
 }
 
+// Draw square with white colour
 Piece.prototype.unDraw = function() {
 	this.fill(VACANT);
 }
 
+
+// Check collision and then move down, else lock piece and create a new piece also
 Piece.prototype.moveDown = function() {
 	if(!this.detectCollision(0, 1, this.activePattern)) {
 		this.unDraw();
@@ -101,6 +110,8 @@ Piece.prototype.moveDown = function() {
 	}
 }
 
+
+// Decrement the "x" position
 Piece.prototype.moveLeft = function() {
 	if(!this.detectCollision(-1, 0, this.activePattern)) {
 		this.unDraw();
@@ -109,6 +120,8 @@ Piece.prototype.moveLeft = function() {
 	}
 }
 
+
+// Increment the "x" position
 Piece.prototype.moveRight = function() {
 	if(!this.detectCollision(1, 0, this.activePattern)) {
 		this.unDraw();
@@ -117,6 +130,7 @@ Piece.prototype.moveRight = function() {
 	}
 }
 
+// Generate the next pattern, if it collides with the wall then push it from the wall
 Piece.prototype.rotate = function() {
 	let nextPattern = this.tetronimo[(this.startPattern + 1)%this.tetronimo.length];
 	let wallKick = 0;
@@ -134,6 +148,7 @@ Piece.prototype.rotate = function() {
 	}
 }
 
+// Detect a collision, check boundaries and then the board value
 Piece.prototype.detectCollision = function(x, y, piece) {
 	for(let i = 0; i < piece.length; i++) {
 		for(let j = 0; j < piece.length; j++) {
@@ -161,6 +176,7 @@ Piece.prototype.detectCollision = function(x, y, piece) {
 	return false;
 }
 
+// Lock the piece by filling the board with the colour of the piece and also clear the row if the whole row is coloured
 Piece.prototype.lockPiece = function() {
 	for(let i = 0; i < this.activePattern.length; i++) {
 		for(let j = 0; j < this.activePattern.length; j++) {
@@ -205,6 +221,8 @@ Piece.prototype.lockPiece = function() {
 
 document.addEventListener('keydown', handleKeyDown);
 
+
+// Handler for left, right, down and rotate
 function handleKeyDown(event) {
 	switch(event.keyCode) {
 		case 37:
@@ -228,6 +246,8 @@ function handleKeyDown(event) {
 
 let dropStartTime = Date.now();
 let gameOver = false;
+
+// Drop a piece every 1000ms
 function dropPiece() {
 	// console.log(newP);
 	let now = Date.now();

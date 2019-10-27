@@ -12,23 +12,31 @@
 			flex-direction: column;
 			align-items: center;
 		}
+		
 		.scoreBoard {
 			font-size: 20px;
 			display: flex;
+		}
+
+		.tetrisHeader {
+			font-size: 30px;
 		}
 	</style>
 </head>
 <body>
 	<div class="tetrisBoard">
-		<span style="font-size: 30px">TETRIS</span>
+		<span class="tetrisHeader">TETRIS</span>
 		<div class="scoreBoard">
 	        Score :&nbsp;<div id="score">0</div>
 	    </div>
 		<canvas id="tetris" width="300" height="600"></canvas>
+
+		<!-- Audio element for playing the song, autoplay blocked by the browser -->
 		<audio class="audioPlayer" controls autoplay><source src="rasputin.mp3" type="audio/mpeg" /></audio>
 	</div>
+
+	<!-- Scripts need to be loaded in order so that first one can use the next one -->
 	<script src="tetromino.js"></script>
 	<script src="tetris.js"></script>
-	<embed loop="true" autostart="true" src="rasputin.mp3" hidden="true" type="video/quicktime"></embed>
 </body>
 </html>

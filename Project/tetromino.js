@@ -1,3 +1,4 @@
+// Algorithm to generate rotation of matrix, returns the next rotation
 function rotateMatrix(mat) {
 	let m = mat.length;
 	let n = mat[0].length;
@@ -18,6 +19,9 @@ function rotateMatrix(mat) {
 	return newMatrix;
 }
 
+
+// Tetronimo structures
+// 1's denote the places to be filled, 0's denote the places to be left vacant on the board
 const ZBase = [
 	[1, 1, 0],
 	[0, 1, 1],
