@@ -49,7 +49,7 @@ const IBase = [
 	[0, 1, 0, 0]
 ];
 
-const O = [
+const OBase = [
 	[0, 0, 0, 0],
 	[0, 1, 1, 0],
 	[0, 1, 1, 0],
@@ -61,3 +61,4 @@ const S = [rotateMatrix(SBase), rotateMatrix(rotateMatrix(SBase)), rotateMatrix(
 const J = [rotateMatrix(JBase), rotateMatrix(rotateMatrix(JBase)), rotateMatrix(rotateMatrix(rotateMatrix(JBase))), JBase];
 const T = [rotateMatrix(TBase), rotateMatrix(rotateMatrix(TBase)), rotateMatrix(rotateMatrix(rotateMatrix(TBase))), TBase];
 const I = [rotateMatrix(IBase), rotateMatrix(rotateMatrix(IBase)), rotateMatrix(rotateMatrix(rotateMatrix(IBase))), IBase];
+const O = [OBase, OBase, OBase, OBase];

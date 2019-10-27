@@ -35,9 +35,9 @@ const pieces = [
 	[Z, "green"],
 	[S, "red"],
 	[J, "blue"],
-	[T, "yellow"],
+	[T, "indigo"],
 	[I, "orange"],
-	[O, "pink"]
+	[O, "coral"]
 ];
 
 function drawTetronimo(piece, colour) {
@@ -57,7 +57,7 @@ function generateRandomPiece() {
 
 let newP = generateRandomPiece();
 
-drawTetronimo(pieces[0][0][3], pieces[0][1])
+// drawTetronimo(pieces[0][0][3], pieces[0][1]);
 
 function Piece(tetronimo, colour) {
 	this.tetronimo = tetronimo;
@@ -87,7 +87,7 @@ Piece.prototype.unDraw = function() {
 }
 
 Piece.prototype.moveDown = function() {
-	if(this.detectCollision(0, 1, this.activePattern)) {
+	if(!this.detectCollision(0, 1, this.activePattern)) {
 		this.unDraw();
 		this.y++;
 		this.draw();
@@ -99,7 +99,7 @@ Piece.prototype.moveDown = function() {
 }
 
 Piece.prototype.moveLeft = function() {
-	if(this.detectCollision(-1, 0, this.activePattern)) {
+	if(!this.detectCollision(-1, 0, this.activePattern)) {
 		this.unDraw();
 		this.x--;
 		this.draw();
@@ -107,7 +107,7 @@ Piece.prototype.moveLeft = function() {
 }
 
 Piece.prototype.moveRight = function() {
-	if(this.detectCollision(1, 0, this.activePattern)) {
+	if(!this.detectCollision(1, 0, this.activePattern)) {
 		this.unDraw();
 		this.x++;
 		this.draw();
@@ -134,14 +134,14 @@ Piece.prototype.rotate = function() {
 Piece.prototype.detectCollision = function(x, y, piece) {
 	for(let i = 0; i < piece.length; i++) {
 		for(let j = 0; j < piece.length; j++) {
-			if(!peice[i][j]) {
+			if(!piece[i][j]) {
 				continue;
 			}
 
 			let newX = this.x + j + x;
 			let newY = this.y + i + y;
 
-			if(newX < 0 || newX > ROW || newY > COLUMN) {
+			if(newX < 0 || newX >= COLUMN || newY >= ROW) {
 				return true;
 			}
 
@@ -149,7 +149,7 @@ Piece.prototype.detectCollision = function(x, y, piece) {
 				continue;
 			}
 
-			if(board[newX][newY] != VACANT) {
+			if(board[newY][newX] != VACANT) {
 				return true;
 			}
 		}
@@ -160,13 +160,13 @@ Piece.prototype.detectCollision = function(x, y, piece) {
 
 Piece.prototype.lockPiece = function() {
 	for(let i = 0; i < this.activePattern.length; i++) {
-		for(let j = 0; j < this.activePattern.length; i++) {
+		for(let j = 0; j < this.activePattern.length; j++) {
 			if(!this.activePattern[i][j]) {
 				continue;
 			}
 			if(this.y + i < 0) {
-				gameOver = true;
 				alert('Game Over!');
+				gameOver = true;
 				break;
 			}
 
@@ -177,7 +177,7 @@ Piece.prototype.lockPiece = function() {
 	for(let i = 0; i < ROW; i++) {
 		let isRowFull = true;
 
-		for(let j = 0; j < COLUMN; i++) {
+		for(let j = 0; j < COLUMN; j++) {
 			isRowFull = isRowFull && (board[i][j] != VACANT);
 		}
 
@@ -202,27 +202,30 @@ document.addEventListener('keydown', handleKeyDown);
 function handleKeyDown(event) {
 	switch(event.keyCode) {
 		case 37:
-			piece.moveLeft();
+			newP.moveLeft();
+			dropStartTime = Date.now();
 			break;
 		case 38:
-			peice.rotate();
+			newP.rotate();
+			dropStartTime = Date.now();
 			break;
 		case 39:
-			piece.moveRight();
+			newP.moveRight();
+			dropStartTime = Date.now();
 			break;
 		case 40:
-			peice.moveDown();
+			newP.moveDown();
+			dropStartTime = Date.now();
 			break;
-		default:
-			alert('Wrong key');
 	}
 }
 
 let dropStartTime = Date.now();
 let gameOver = false;
 function dropPiece() {
+	console.log(newP);
 	let now = Date.now();
-	let delta = now = dropStartTime;
+	let delta = now - dropStartTime;
 	if(delta > 1000) {
 		newP.moveDown();
 		dropStartTime = Date.now();
@@ -231,3 +234,5 @@ function dropPiece() {
 		requestAnimationFrame(dropPiece);
 	}
 }
+
+// dropPiece();
