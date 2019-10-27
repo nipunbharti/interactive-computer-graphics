@@ -2,9 +2,30 @@
 <html>
 <head>
 	<title>Tetris</title>
+
+	<style type="text/css">
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		.tetrisBoard {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		.scoreBoard {
+			font-size: 20px;
+			display: flex;
+		}
+	</style>
 </head>
 <body>
-	<canvas id="tetris" width="300" height="600"></canvas>
+	<div class="tetrisBoard">
+		<span style="font-size: 30px">TETRIS</span>
+		<div class="scoreBoard">
+	        Score :&nbsp;<div id="score">0</div>
+	    </div>
+		<canvas id="tetris" width="300" height="600"></canvas>
+	</div>
 	<script src="tetromino.js"></script>
 	<script src="tetris.js"></script>
 </body>
