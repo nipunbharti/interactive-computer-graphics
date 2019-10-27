@@ -50,6 +50,13 @@ function drawTetronimo(piece, colour) {
 	}
 }
 
+function generateRandomPiece() {
+	let randomNumber = Math.floor(Math.random()*pieces.length);
+	return new Piece(pieces[randomNumber][0], pieces[randomNumber][1]);
+}
+
+let newP = generateRandomPiece();
+
 drawTetronimo(pieces[0][0][3], pieces[0][1])
 
 function Piece(tetronimo, colour) {
@@ -86,7 +93,8 @@ Piece.prototype.moveDown = function() {
 		this.draw();
 	}
 	else {
-
+		this.lockPiece();
+		newP = generateRandomPiece();
 	}
 }
 
@@ -96,9 +104,6 @@ Piece.prototype.moveLeft = function() {
 		this.x--;
 		this.draw();
 	}
-	else {
-
-	}
 }
 
 Piece.prototype.moveRight = function() {
@@ -106,9 +111,6 @@ Piece.prototype.moveRight = function() {
 		this.unDraw();
 		this.x++;
 		this.draw();
-	}
-	else {
-
 	}
 }
 
@@ -156,6 +158,45 @@ Piece.prototype.detectCollision = function(x, y, piece) {
 	return false;
 }
 
+Piece.prototype.lockPiece = function() {
+	for(let i = 0; i < this.activePattern.length; i++) {
+		for(let j = 0; j < this.activePattern.length; i++) {
+			if(!this.activePattern[i][j]) {
+				continue;
+			}
+			if(this.y + i < 0) {
+				gameOver = true;
+				alert('Game Over!');
+				break;
+			}
+
+			board[this.y + i][this.x + j] = this.colour;
+		}
+	}
+
+	for(let i = 0; i < ROW; i++) {
+		let isRowFull = true;
+
+		for(let j = 0; j < COLUMN; i++) {
+			isRowFull = isRowFull && (board[i][j] != VACANT);
+		}
+
+		if(isRowFull) {
+			for(let k = i; k > 1; k--) {
+				for(let j = 0; j < COLUMN; j++) {
+					board[k][j] = board[k-1][j];
+				}
+			}
+
+			for(let j = 0; j < COLUMN; j++) {
+				board[0][j] = VACANT;
+			}
+		}
+	}
+
+	drawBoard();
+}
+
 document.addEventListener('keydown', handleKeyDown);
 
 function handleKeyDown(event) {
@@ -177,3 +218,16 @@ function handleKeyDown(event) {
 	}
 }
 
+let dropStartTime = Date.now();
+let gameOver = false;
+function dropPiece() {
+	let now = Date.now();
+	let delta = now = dropStartTime;
+	if(delta > 1000) {
+		newP.moveDown();
+		dropStartTime = Date.now();
+	}
+	if(!gameOver) {
+		requestAnimationFrame(dropPiece);
+	}
+}
