@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
    <body>
-      <canvas width = "1400" height = "650" id = "my_Canvas"></canvas>
+      <canvas width = "650" height = "650" id = "my_Canvas"></canvas>
 
       <script>
          /*================Creating a canvas=================*/
@@ -10,15 +10,18 @@
 
          /*==========Defining and storing the geometry=======*/
 
+         let pointsOnCircle = [];
+         for(let i = 0; i <=360; i++) {
+            let x = 0.5*Math.cos((Math.PI/180)*i);
+            let y = 0.5*Math.sin((Math.PI/180)*i);
+            pointsOnCircle.push(x);
+            pointsOnCircle.push(y);
+         }
+
+         console.log(pointsOnCircle);
          var vertices = [
-            -0.9,0.3,
-            -0.9,0.4,
-            -0.9,0.5,
-            -0.9,0.4,
-            -0.85,0.4,
-            -0.85,0.5,
-            -0.85,0.5,
-            -0.85,0.3
+            0.0, 0.0,
+            ...pointsOnCircle
          ];
 
          var n = vertices.length/2;
@@ -58,7 +61,7 @@
          // fragment shader source code
          var fragCode =
             'void main(void) {' +
-               ' gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);' +
+               ' gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);' +
             '}';
 
          // Create fragment shader object
@@ -115,7 +118,8 @@
          gl.viewport(0,0,canvas.width,canvas.height);
 
          // Draw the triangle
-         gl.drawArrays(gl.LINES, 0, n);
+         // gl.drawArrays(gl.POINTS, 0, n);
+         gl.drawArrays(gl.TRIANGLE_FAN, 0, n);
       </script>
    </body>
 </html>

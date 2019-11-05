@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>
+			Rectangle
+		</title>
+		<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+	  	<script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.js"></script>
+	  	<style type="text/css">
+	  		canvas {
+	  			border: 1px solid black;
+	  		}
+	  	</style>
+	  	<script>
+	  		var stepX = 0;
+	  		var stepY = 0;
+	  		function setup() {
+	  			createCanvas(800, 600);
+	  		}
+
+	  		function draw() {
+
+	  			// Steps front	
+	  			line(300 + (stepX*30), 450 - (stepY*70), 500 + (stepX*30), 450 - (stepY*70));
+	  			line(300 + (stepX*30), 410 - (stepY*70), 300 + (stepX*30), 450 - (stepY*70));
+	  			line(500 + (stepX*30), 410 - (stepY*70), 500 + (stepX*30), 450 - (stepY*70));
+	  			line(300 + (stepX*30), 410 - (stepY*70), 500 + (stepX*30), 410 - (stepY*70));
+
+	  			// Steps slant
+	  			line(300 + (stepX*30), 410 - (stepY*70), 330 + (stepX*30), 380 - (stepY*70));
+	  			line(500 + (stepX*30), 410 - (stepY*70), 530 + (stepX*30), 380 - (stepY*70));
+
+	  			// Side
+	  			line(710, 0, 710, 310);
+	  			line(710, 310, 500, 450);
+
+	  			stepX++, stepY++;
+	  		}
+	  	</script>
+	</head>
+	<body>
+	</body>
+</html>
